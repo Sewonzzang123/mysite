@@ -11,19 +11,19 @@ import com.douzone.mvc.util.MvcUtils;
 import com.douzone.mysite.repository.GuestbookRepository;
 import com.douzone.mysite.vo.GuestbookVo;
 
-public class AddAction implements Action {
+public class DeleteAction implements Action {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name=request.getParameter("name");
-		String password=request.getParameter("password");
-		String message=request.getParameter("content");
+	public void execute(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		Long no = Long.parseLong(request.getParameter("no"));
+		String password = request.getParameter("password");
 		
 		GuestbookVo vo = new GuestbookVo();
-		vo.setName(name);
+		vo.setNo(no);
 		vo.setPassword(password);
-		vo.setMessage(message);
-		new GuestbookRepository().insert(vo);
+		
+		new GuestbookRepository().delete(vo);
 		
 		MvcUtils.redirect(request.getContextPath()+"/guestbook", request, response);
 	}
