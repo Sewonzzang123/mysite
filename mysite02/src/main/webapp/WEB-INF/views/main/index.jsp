@@ -12,7 +12,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" src="https://thumb1.photo.mybox.naver.com/3472449693682917672?type=m3&setidc=2&filelink=FDfQ64B0/7jMzQOJZZNL0SJS+NDzH1O7ySAkQq2LwjOqJdmvRD52OHAJxKRBo72cDGpokezh/5ADffdpltuwnAM=&authtoken=r0r/0r0cJn5+7v6hT9vNNgI="
+					<img id="profile" src="<%=request.getContextPath() %>/assets/images/myimage.jpg"
 					style='width:150px;height:150px;'>
 					<h2>안녕하세요. 장세원의  mysite에 오신 것을 환영합니다.</h2>
 					<p>
