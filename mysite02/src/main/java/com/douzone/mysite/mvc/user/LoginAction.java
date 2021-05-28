@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.douzone.mvc.Action;
 import com.douzone.mvc.util.MvcUtils;
@@ -18,16 +19,18 @@ public class LoginAction implements Action {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		UserVo vo = new UserRepository().findByEmailAndPassword(email, password);
+		UserVo userVo = new UserRepository().findByEmailAndPassword(email, password);
 		// 실패
-		if (vo == null) {
+		if (userVo == null) {
 			request.setAttribute("result", "fail");
 			request.setAttribute("email", email);
 			MvcUtils.forward("user/loginform", request, response);
 			return;
 		}
-		System.out.println(vo.toString());
-		// 인증 처리(session 처리)
+		// 인증 처리(session 처리) 
+//		true:없으면 만들어서 보내기 false:없으면 null
+		HttpSession session =  request.getSession(true);
+		session.setAttribute("authUser", userVo);
 		
 		MvcUtils.redirect(request.getContextPath(), request, response);
 	}
