@@ -16,7 +16,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board?a=search" method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -28,13 +28,7 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>
-					<%-- 
-					
-					<c:set var="count" value="${fn:length(list) }" />
-					<c:forEach begin="0" end="${fn:length(list) }" var="user" items="${list }" varStatus="status">
-					 --%>
-					<!-- padding-left: vo.depth*20px; -->
+					</tr>				
 					<c:forEach begin="0" end="5" items="${boardList }" var="board"
 						varStatus="boardNo">
 						<tr>
@@ -60,13 +54,12 @@
 				<div class="pager">
 
 					<ul>
-						<c:if test="${pageInfo.currentPage!=pageInfo.firstPageNo}">
+						<c:if test="${pageInfo.currentPage!=1 && pageInfo.firstPageNo!=1}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.currentPage-1}">◀</a></li>
+								href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo}">◀</a></li>
 						</c:if>
 
-						<c:forEach begin="${pageInfo.firstPageNo }"
-							end="${pageInfo.lastPageNo }" var="page">
+						<c:forEach begin="${pageInfo.firstPageNo }" end="${pageInfo.lastPageNo }" var="page">
 							<c:if test="${page==pageInfo.currentPage}">
 								<li class="selected">${page }</li>
 							</c:if>
@@ -79,9 +72,9 @@
 								test="${page>pageInfo.totalPage && pageInfo.totalPage<pageInfo.lastPageNo }">${page } </c:if>
 						</c:forEach>
 						<c:if
-							test="${pageInfo.currentPage!=pageInfo.lastPageNo && pageInfo.currentPage<pageInfo.totalPage}">
+							test="${pageInfo.currentPage<pageInfo.totalPage}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.currentPage+1}">▶</a></li>
+								href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo}">▶</a></li>
 						</c:if>
 					</ul>
 				</div>

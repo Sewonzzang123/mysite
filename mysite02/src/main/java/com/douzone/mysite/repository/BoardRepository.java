@@ -411,5 +411,67 @@ public class BoardRepository {
 		
 	}
 
+	public List<BoardVo> search(String search) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date " 
+			+ "from board a, user b "
+					+ "where a.user_no = b.no "
+					+ " and a.title like ? or a.contents like ? " 
+			+ "order by a.group_no DESC, a.order_no ASC " + "limit ?,5 ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setInt(3, 0);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				int depths = rs.getInt(3);
+				int hit = rs.getInt(4);
+				Long userNo = rs.getLong(5);
+				String userName = rs.getString(6);
+				String regDate = rs.getString(7).replace(".0", "");
+
+				BoardVo vo = new BoardVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setDepth(depths);
+				vo.setHit(hit);
+				vo.setUserNo(userNo);
+				vo.setUserName(userName);
+				vo.setRegDate(regDate);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error " + e);
+		} finally {
+			try {
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error " + e);
+			}
+		}
+		return result;
+	}
+
 
 }
