@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MvcUtils;
-import com.douzone.mysite.mvc.main.MainActionFactory;
-import com.douzone.mysite.mvc.user.UserActionFactory;
+import com.douzone.mysite.web.main.MainActionFactory;
+import com.douzone.mysite.web.user.UserActionFactory;
+import com.douzone.web.Action;
+import com.douzone.web.util.MvcUtils;
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+//		EncodingFilter에서 구현
+//		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
 		
 		Action action = new MainActionFactory().getAction(actionName);
