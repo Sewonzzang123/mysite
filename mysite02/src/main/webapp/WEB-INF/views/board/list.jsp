@@ -16,7 +16,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board?a=search" method="post">
+				<form id="search_form"
+					action="${pageContext.request.contextPath }/board?a=search"
+					method="post">
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -28,16 +30,21 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
+					</tr>
+					<c:set var="count" value="${totalCount}" />
 					<c:forEach begin="0" end="5" items="${boardList }" var="board"
 						varStatus="boardNo">
 						<tr>
 							<!-- 번호매김 -->
-							<td>${boardNo.index }</td>
+							<td>${count-boardNo.index-((pageInfo.currentPage-1)*5) }</td>
 							<td
 								style="text-align:left <c:if test="${board.depth!=0 }">; padding-left: ${board.depth*20}px;</c:if>">
-								<c:if test="${board.depth!=0 }"><img src="${pageContext.request.contextPath }/assets/images/reply.png"/></c:if><a
-								href="${pageContext.request.contextPath }/board?a=view&no=${board.no}&p=${pageInfo.currentPage}">${board.title }</a></td>
+								<c:if test="${board.depth!=0 }">
+									<img
+										src="${pageContext.request.contextPath }/assets/images/reply.png" />
+								</c:if><a
+								href="${pageContext.request.contextPath }/board?a=view&no=${board.no}&p=${pageInfo.currentPage}">${board.title }</a>
+							</td>
 							<td>${board.userName }</td>
 							<td>${board.hit }</td>
 							<td>${board.regDate }</td>
@@ -54,12 +61,16 @@
 				<div class="pager">
 
 					<ul>
-						<c:if test="${pageInfo.currentPage!=1 && pageInfo.firstPageNo!=1}">
+						<c:if test="${pageInfo.firstPageNo!=1}">
+							<li><a
+								href="${pageContext.request.contextPath }/board?p=${pageInfo.firstPageNo-5}">◀◀</a></li>
+						</c:if>
+						<c:if test="${pageInfo.currentPage!=1}">
 							<li><a
 								href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo}">◀</a></li>
 						</c:if>
-
-						<c:forEach begin="${pageInfo.firstPageNo }" end="${pageInfo.lastPageNo }" var="page">
+						<c:forEach begin="${pageInfo.firstPageNo }"
+							end="${pageInfo.lastPageNo }" var="page">
 							<c:if test="${page==pageInfo.currentPage}">
 								<li class="selected">${page }</li>
 							</c:if>
@@ -71,10 +82,13 @@
 							<c:if
 								test="${page>pageInfo.totalPage && pageInfo.totalPage<pageInfo.lastPageNo }">${page } </c:if>
 						</c:forEach>
-						<c:if
-							test="${pageInfo.currentPage<pageInfo.totalPage}">
+						<c:if test="${pageInfo.currentPage<pageInfo.totalPage}">
 							<li><a
 								href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo}">▶</a></li>
+						</c:if>
+						<c:if test="${pageInfo.currentPage<pageInfo.totalPage}">
+							<li><a
+								href="${pageContext.request.contextPath }/board?p=${pageInfo.lastPageNo+1}">▶▶</a></li>
 						</c:if>
 					</ul>
 				</div>

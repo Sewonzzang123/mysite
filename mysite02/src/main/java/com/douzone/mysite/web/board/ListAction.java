@@ -29,7 +29,7 @@ public class ListAction implements Action {
 		List<BoardVo> list =new BoardRepository().findByPage(currentPage);
 
 		double totalPage= Math.ceil(new BoardRepository().findTotalPage()/5);
-		
+		int index = (int)new BoardRepository().findTotalPage();
 
 		int lastPageNo = (int)Math.ceil((double)currentPage/5)*5;
 		int firstPageNo = lastPageNo-4; 
@@ -45,6 +45,7 @@ public class ListAction implements Action {
 		
 		request.setAttribute("pageInfo", map);
 		request.setAttribute("boardList", list);
+		request.setAttribute("totalCount", index);
 		MvcUtils.forward("board/list", request, response);
 	}
 
