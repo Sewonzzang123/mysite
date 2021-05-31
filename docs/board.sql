@@ -47,3 +47,14 @@ where no=4;
 -- 게시글 삭제
 delete from board
 where no=7;
+
+-- 검색
+select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date
+from board a, user b 
+where a.user_no = b.no 
+ and a.title like '%마루%', contents like '%마루%' 
+order by a.group_no DESC, a.order_no ASC;
+            
+select count(*)
+from board
+where ;
