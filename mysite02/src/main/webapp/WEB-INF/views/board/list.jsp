@@ -39,7 +39,7 @@
 							<!-- 번호매김 -->
 							<td>${count-boardNo.index-((pageInfo.currentPage-1)*5) }</td>
 							<td
-								style="text-align:left <c:if test="${board.depth!=0 }">; padding-left: ${board.depth*20}px;</c:if>">
+								style="text-align:left <c:if test="${board.depth!=0 && board.parentNo != -1}">; padding-left: ${board.depth*20}px;</c:if>">
 								<c:if test="${board.depth!=0 && board.parentNo==-1 }">
 									<div style="color:red">[원글이 삭제된 답글]</div>
 								</c:if>
