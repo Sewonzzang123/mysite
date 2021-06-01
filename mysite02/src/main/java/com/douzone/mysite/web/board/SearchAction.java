@@ -33,7 +33,10 @@ public class SearchAction implements Action {
 
 		List<BoardVo> list = new BoardRepository().search(search, currentPage);		
 				
-				double totalPage = Math.ceil(new BoardRepository().findSearchTotalPage(search)/ 5);
+		double totalPage = 1;
+		if (Math.ceil(new BoardRepository().findSearchTotalPage(search) / 5) != 0) {
+			totalPage = Math.ceil(new BoardRepository().findSearchTotalPage(search) / 5);
+		};
 		int lastPageNo = 1;
 		if ((int) Math.ceil((double) currentPage / 5) * 5 != 0) {
 			lastPageNo = (int) Math.ceil((double) currentPage / 5) * 5;
@@ -42,7 +45,6 @@ public class SearchAction implements Action {
 		if (lastPageNo > 4) {
 			firstPageNo = lastPageNo - 4;
 		}
-
 		int index = (int)new BoardRepository().findSearchTotalPage(search);
 		
 		Map<String, Integer> map = new HashMap<>();

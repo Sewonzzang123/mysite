@@ -27,8 +27,10 @@ public class ListAction implements Action {
 		}
 		
 		List<BoardVo> list =new BoardRepository().findByPage(currentPage);
-
-		double totalPage= Math.ceil(new BoardRepository().findTotalPage()/5);
+		double totalPage = 1;
+		if (Math.ceil(new BoardRepository().findTotalPage()/5) != 0) {
+			totalPage = Math.ceil(new BoardRepository().findTotalPage()/5);
+		};
 		int index = (int)new BoardRepository().findTotalPage();
 		int lastPageNo = 1;
 		if((int)Math.ceil((double)currentPage/5)*5 != 0) {

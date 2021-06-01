@@ -421,12 +421,12 @@ public class BoardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select distinct a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date " 
-						+ "from board a, user b "
-						+ "where a.user_no = b.no "
-						+ " and a.title like ? or a.contents like ? " 
-						+ "order by a.group_no DESC, a.order_no ASC " 
-						+ "limit ?,5 ";
+			String sql = "select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date "
+					+ "from board a "
+					+ "join user b on a.user_no = b.no  "
+					+ "where a.title like ? or a.contents like ?  "
+					+ "order by a.group_no DESC, a.order_no ASC "
+					+ "limit ?,5";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+search+"%");
 			pstmt.setString(2, "%"+search+"%");
@@ -485,10 +485,10 @@ public class BoardRepository {
 			conn = getConnection();
 
 			String sql = "select count(*) "
-					+ "from (select distinct a.no, a.title, a.depths, a.hit, a.user_no , b.name, a.reg_date "
-					+ "		from board a, user b  "
-					+ "		where a.user_no = b.no  "
-					+ "		and a.title like ? or a.contents like ?)c ";
+					+ " from (select distinct a.no, a.title, a.depths, a.hit, a.user_no , b.name, a.reg_date "
+					+ " from board a "
+					+ " join user b on a.user_no = b.no "
+					+ " where a.title like ? or a.contents like ?)c ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+search+"%");
 			pstmt.setString(2, "%"+search+"%");

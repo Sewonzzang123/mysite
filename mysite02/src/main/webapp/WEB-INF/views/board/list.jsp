@@ -60,13 +60,12 @@
 				</table>
 				<!-- pager 추가 -->
 				<div class="pager">
-
 					<ul>
-						<c:if test="${pageInfo.firstPageNo!=1}">
+						<c:if test="${pageInfo.firstPageNo>1 && pageInfo.lastPageNo>5}">
 							<li><a
 								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.firstPageNo-5}">◀◀</a></li>
 						</c:if>
-						<c:if test="${pageInfo.currentPage!=1}">
+						<c:if test="${pageInfo.currentPage>1}">
 							<li><a
 								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.prevPageNo}">◀</a></li>
 						</c:if>
