@@ -529,10 +529,9 @@ public class BoardRepository {
 			conn = getConnection();
 
 			String sql = "update board "
-					+ "set parent_no=-1 "
+					+ "set parent_no=-1, depths=0 "
 					+ "where parent_no=? ";
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setLong(1, no);
 
 			int count = pstmt.executeUpdate();

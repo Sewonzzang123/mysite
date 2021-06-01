@@ -36,11 +36,10 @@
 					<c:forEach begin="0" end="5" items="${boardList }" var="board"
 						varStatus="boardNo">
 						<tr>
-							<!-- 번호매김 -->
 							<td>${count-boardNo.index-((pageInfo.currentPage-1)*5) }</td>
 							<td
 								style="text-align:left <c:if test="${board.depth!=0 && board.parentNo != -1}">; padding-left: ${board.depth*20}px;</c:if>">
-								<c:if test="${board.depth!=0 && board.parentNo==-1 }">
+								<c:if test="${board.parentNo==-1 }">
 									<div style="color:red">[원글이 삭제된 답글]</div>
 								</c:if>
 								
