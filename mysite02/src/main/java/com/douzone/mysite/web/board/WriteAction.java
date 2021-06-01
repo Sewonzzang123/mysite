@@ -41,6 +41,7 @@ public class WriteAction implements Action {
 		vo.setGroupNo(groupNo+1);
 		vo.setOrderNo(0);
 		vo.setDepth(0);
+		vo.setParentNo(0L);
 		
 		new BoardRepository().insert(vo);
 		

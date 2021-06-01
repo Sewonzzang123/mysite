@@ -39,7 +39,7 @@ public class BoardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date " + "from board a, user b "
+			String sql = "select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date, a.parent_no " + "from board a, user b "
 					+ "where a.user_no = b.no " + "order by a.group_no DESC, a.order_no ASC " + "limit ?,5 ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, ((pageNum - 1) * 5));
@@ -53,6 +53,7 @@ public class BoardRepository {
 				Long userNo = rs.getLong(5);
 				String userName = rs.getString(6);
 				String regDate = rs.getString(7).replace(".0", "");
+				Long parentNo = rs.getLong(8);
 
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
@@ -62,6 +63,7 @@ public class BoardRepository {
 				vo.setUserNo(userNo);
 				vo.setUserName(userName);
 				vo.setRegDate(regDate);
+				vo.setParentNo(parentNo);
 
 				result.add(vo);
 			}
@@ -169,7 +171,7 @@ public class BoardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "insert into board " + "values(null,?,?,sysdate(),0,?,?,?,?) ";
+			String sql = "insert into board " + "values(null,?,?,sysdate(),0,?,?,?,?,?) ";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getTitle());
@@ -178,6 +180,7 @@ public class BoardRepository {
 			pstmt.setInt(4, vo.getOrderNo());
 			pstmt.setInt(5, vo.getDepth());
 			pstmt.setLong(6, vo.getUserNo());
+			pstmt.setLong(7, vo.getParentNo());
 
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -507,6 +510,41 @@ public class BoardRepository {
 					pstmt.close();
 				}
 
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error " + e);
+			}
+		}
+		return result;
+	}
+
+	public boolean updateDelete(Long no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "update board "
+					+ "set parent_no=-1 "
+					+ "where parent_no=? ";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, no);
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
 				if (conn != null) {
 					conn.close();
 				}

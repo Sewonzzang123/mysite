@@ -11,6 +11,17 @@ public class BoardVo {
 	private int depth;
 	private Long userNo;
 	private String userName;
+	private Long parentNo;
+	
+	public Long getParentNo() {
+		return parentNo;
+	}
+
+	public void setParentNo(Long parentNo) {
+		this.parentNo = parentNo;
+	}
+
+
 
 	public Long getNo() {
 		return no;
@@ -96,7 +107,7 @@ public class BoardVo {
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", hit="
 				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ ", userName=" + userName + "]";
+				+ ", userName=" + userName + ", parentNo=" + parentNo + "]";
 	}
 
 }

@@ -33,7 +33,7 @@ public class ReplyAction implements Action {
 		int groupNo = Integer.parseInt(request.getParameter("groupNo"));
 		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 		int depth = Integer.parseInt(request.getParameter("depth"));
-		
+		Long parentNo = Long.parseLong(request.getParameter("no"));
 		new BoardRepository().reply(groupNo, (orderNo+1));
 		
 		String title = request.getParameter("title");
@@ -46,6 +46,7 @@ public class ReplyAction implements Action {
 		vo.setGroupNo(groupNo);
 		vo.setOrderNo(orderNo+1);
 		vo.setDepth(depth+1);
+		vo.setParentNo(parentNo);
 		
 		new BoardRepository().insert(vo);
 		
