@@ -60,3 +60,8 @@ from (select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_da
 		from board a
 		join user b on a.user_no = b.no 
 		where a.title like '%ㄴㅇㄹ%' or a.contents like '%ㄴㅇㄹ%')c;
+        
+-- 부모 삭제시 자식 parent_no 를 -1으로 변경
+update board
+set parent_no=-1
+where parent_no=48;
