@@ -20,7 +20,7 @@ public class SearchAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String search = request.getParameter("kwd");
 		if ("".equals(search)) {
-			MvcUtils.forward("board/list", request, response);
+			MvcUtils.redirect(request.getContextPath()+"/board", request, response);
 			return;
 		}
 		String page = request.getParameter("p");
