@@ -1,5 +1,4 @@
 desc board;
-
 select * from board;
 select * from user;
 
@@ -49,14 +48,15 @@ delete from board
 where no=7;
 
 -- 검색
-select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date
-from board a, user b 
-where a.user_no = b.no 
-and a.title like '%마루%' or a.contents like '%마루%' 
-order by a.group_no DESC, a.order_no ASC;
+select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date
+from board a
+join user b on a.user_no = b.no 
+where a.title like '%ㄴㅇㄹ%' or a.contents like '%ㄴㅇㄹ%' 
+order by a.group_no DESC, a.order_no ASC
+limit 0,5;
             
 select count(*)
-from (select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date
-		from board a, user b 
-		where a.user_no = b.no 
-		and a.title like '%마루%' or a.contents like '%마루%')c;
+from (select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date
+		from board a
+		join user b on a.user_no = b.no 
+		where a.title like '%ㄴㅇㄹ%' or a.contents like '%ㄴㅇㄹ%')c;
