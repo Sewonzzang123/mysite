@@ -17,8 +17,9 @@
 		<div id="content">
 			<div id="board">
 				<form id="search_form"
-					action="${pageContext.request.contextPath }/board?a=search"
-					method="post">
+					action="${pageContext.request.contextPath }/board"
+					method="get">
+					<input type="hidden" name="a" value="search"/>
 					<input type="text" id="kwd" name="kwd" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -63,11 +64,11 @@
 					<ul>
 						<c:if test="${pageInfo.firstPageNo!=1}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.firstPageNo-5}">◀◀</a></li>
+								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.firstPageNo-5}">◀◀</a></li>
 						</c:if>
 						<c:if test="${pageInfo.currentPage!=1}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.prevPageNo}">◀</a></li>
+								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.prevPageNo}">◀</a></li>
 						</c:if>
 						<c:forEach begin="${pageInfo.firstPageNo }"
 							end="${pageInfo.lastPageNo }" var="page">
@@ -77,18 +78,18 @@
 							<c:if
 								test="${page<=pageInfo.totalPage && page!=pageInfo.currentPage}">
 								<li><a
-									href="${pageContext.request.contextPath }/board?p=${page }">${page }</a></li>
+									href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${page }">${page }</a></li>
 							</c:if>
 							<c:if
 								test="${page>pageInfo.totalPage && pageInfo.totalPage<pageInfo.lastPageNo }">${page } </c:if>
 						</c:forEach>
 						<c:if test="${pageInfo.currentPage<pageInfo.totalPage}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.nextPageNo}">▶</a></li>
+								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.nextPageNo}">▶</a></li>
 						</c:if>
-						<c:if test="${pageInfo.currentPage<pageInfo.totalPage}">
+						<c:if test="${pageInfo.lastPageNo<pageInfo.totalPage}">
 							<li><a
-								href="${pageContext.request.contextPath }/board?p=${pageInfo.lastPageNo+1}">▶▶</a></li>
+								href="${pageContext.request.contextPath }/board?<c:if test="${not empty param.kwd }">a=search&kwd=${param.kwd }&</c:if>p=${pageInfo.lastPageNo+1}">▶▶</a></li>
 						</c:if>
 					</ul>
 				</div>

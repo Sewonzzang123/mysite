@@ -411,7 +411,7 @@ public class BoardRepository {
 		
 	}
 
-	public List<BoardVo> search(String search) {
+	public List<BoardVo> search(String search, int pageNum) {
 		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
@@ -421,15 +421,16 @@ public class BoardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date " 
-			+ "from board a, user b "
-					+ "where a.user_no = b.no "
-					+ " and a.title like ? or a.contents like ? " 
-			+ "order by a.group_no DESC, a.order_no ASC " + "limit ?,5 ";
+			String sql = "select distinct a.no, a.title, a.depths, a.hit, b.no , b.name, a.reg_date " 
+						+ "from board a, user b "
+						+ "where a.user_no = b.no "
+						+ " and a.title like ? or a.contents like ? " 
+						+ "order by a.group_no DESC, a.order_no ASC " 
+						+ "limit ?,5 ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+search+"%");
 			pstmt.setString(2, "%"+search+"%");
-			pstmt.setInt(3, 0);
+			pstmt.setInt(3, ((pageNum - 1) * 5));
 			
 			rs = pstmt.executeQuery();
 
@@ -472,6 +473,47 @@ public class BoardRepository {
 		}
 		return result;
 	}
+	
+	public double findSearchTotalPage(String search) {
+		double result = 0;
 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
+		try {
+			conn = getConnection();
+
+			String sql = "select count(*) "
+					+ "from (select distinct a.no, a.title, a.depths, a.hit, a.user_no , b.name, a.reg_date "
+					+ "		from board a, user b  "
+					+ "		where a.user_no = b.no  "
+					+ "		and a.title like ? or a.contents like ?)c ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error " + e);
+		} finally {
+			try {
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error " + e);
+			}
+		}
+		return result;
+	}
 }

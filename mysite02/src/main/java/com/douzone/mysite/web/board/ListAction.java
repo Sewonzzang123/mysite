@@ -30,9 +30,14 @@ public class ListAction implements Action {
 
 		double totalPage= Math.ceil(new BoardRepository().findTotalPage()/5);
 		int index = (int)new BoardRepository().findTotalPage();
-
-		int lastPageNo = (int)Math.ceil((double)currentPage/5)*5;
-		int firstPageNo = lastPageNo-4; 
+		int lastPageNo = 1;
+		if((int)Math.ceil((double)currentPage/5)*5 != 0) {
+			lastPageNo = (int)Math.ceil((double)currentPage/5)*5;
+		}
+		int firstPageNo = 1;
+		if(lastPageNo > 4) {
+			firstPageNo = lastPageNo-4; 
+		}		
 
 		Map<String, Integer> map = new HashMap<>();
 		
