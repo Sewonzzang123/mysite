@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
-	private String path="/WEB-INF/views/";
 	
 	@RequestMapping("")
 	public String main() {
-		return path+"main/index.jsp";
+		return "/WEB-INF/views/main/index.jsp";
 	}
 }
