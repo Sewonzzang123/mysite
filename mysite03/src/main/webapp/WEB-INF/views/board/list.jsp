@@ -56,7 +56,7 @@
 									test="${board.userName==sessionScope.authUser.name }">
 									<a
 										href="${pageContext.request.contextPath }/board?a=delete&no=${board.no}&p=${pageInfo.currentPage}"
-										class="del">삭제</a>
+										class="del" style='background-image:url("${pageContext.request.contextPath}/assets/images/recycle.png")'>삭제</a>
 								</c:if></td>
 						</tr>
 					</c:forEach>
