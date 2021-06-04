@@ -24,22 +24,18 @@ public class UserRepository {
 		Map<String, String> map = new HashMap<>();
 		map.put("email",email);
 		map.put("password",password);
-		UserVo result = sqlSession.selectOne("user.findByEmailAndPassword", map);
-		return result;
+		return sqlSession.selectOne("user.findByEmailAndPassword", map);
 	}
 
 	public UserVo findByNo(Long userNo) {
-		UserVo result = null;
-		
-		return result;
+		return sqlSession.selectOne("user.findByNo", userNo);
 
 	}
 	
-	public boolean update(UserVo vo) {
-		boolean result = false;
-
-		return result;
+	public int update(UserVo vo) {
+		return sqlSession.update("user.update", vo);
 	}
+	
 	public UserVo updateAuthUser(Long userNo) {
 		UserVo result = null;
 		

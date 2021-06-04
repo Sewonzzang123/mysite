@@ -36,7 +36,7 @@ public class GuestbookRepository {
 		GuestbookVo vo= new GuestbookVo();
 		vo.setNo(no);
 		vo.setPassword(password);
-		int count = sqlSession.delete("delete", vo);
+		int count = sqlSession.delete("guestbook.delete", vo);
 		return count==1;
 
 	}

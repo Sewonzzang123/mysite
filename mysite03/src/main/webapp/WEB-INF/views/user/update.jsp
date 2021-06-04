@@ -17,8 +17,7 @@
 		<div id="content">
 			<div id="user">
 				<form id="update-form" name="updateForm" method="post"
-					action="${pageContext.request.contextPath }/user">
-					<input type="hidden" name="a" value="update" /> <input
+					action="${pageContext.request.contextPath }/user/update"><input
 						type="hidden" name="email" value="${user.email }" /> <label class="block-label"
 						for="name">이름</label> <input id="name" name="name" type="text"
 						value="${user.name }"> <label class="block-label"

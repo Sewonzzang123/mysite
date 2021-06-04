@@ -11,10 +11,43 @@
 
 	<select id="findByEmailAndPassword" parameterType="map"
 		resultType="uservo">
+		<![CDATA[
 		select no, name 
 		  from user 
 		 where email = #{email } 
 		   and password = #{password } 
+		   ]]>
 	</select>
+
+	<!-- 값 자체가 넘어오기 때문에 no에 아무거나 줘도 되지만, 알아볼 수 있는 이름으로 표기 -->
+	<select id="findByNo" parameterType="long" resultType="uservo">
+		<![CDATA[
+		select no, name, email, gender
+	 	  from user 
+		 where no=#{userNo } 
+		]]>
+	</select>
+
+	<update id="update" parameterType="uservo">
+		<choose>
+			<when test='password == ""'>
+				<![CDATA[
+				update  user 
+				   set  name=#{name } , 
+				  		gender=#{gender } 
+				 where  no=#{no }					
+				]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+				update  user 
+				   set  name=#{name } , 
+				  		password=#{password } , 
+				  		gender=#{gender } 
+				 where  no=#{no }					
+					]]>
+			</otherwise>
+			</choose>
+	</update>
 
 </mapper>

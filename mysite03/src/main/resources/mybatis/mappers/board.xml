@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- board insert 
+	<insert>
+	<choose>
+	<when test='groupno==""'>....로 하면 된다
+-->
+<!-- where title like %#{keyword }% >x
+	1.keyword="%"+keyword+"%"
+	2.'%${keyword }%' #은 절대 안돼 !!!!
+-->

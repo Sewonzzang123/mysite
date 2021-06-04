@@ -22,4 +22,15 @@ public class UserService {
 		return result;
 	}
 
+	public UserVo getUser(Long no) {
+		UserVo result = userRepository.findByNo(no);
+		return result;
+		
+	}
+
+	public boolean updateUser(UserVo userVo) {
+		int result = userRepository.update(userVo);
+		return result==1;
+	}
+
 }
