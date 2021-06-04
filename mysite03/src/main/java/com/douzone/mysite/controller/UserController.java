@@ -37,7 +37,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
-		return "user/loginform";
+		return "user/login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -51,7 +51,7 @@ public class UserController {
 		if(authUser==null) {
 			model.addAttribute("result", "fail");
 			model.addAttribute("email", email);
-			return "user/loginform";
+			return "user/login";
 		}
 		//session처리
 		session.setAttribute("authUser", authUser);
