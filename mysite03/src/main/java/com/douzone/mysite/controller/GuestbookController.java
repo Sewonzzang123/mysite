@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +21,20 @@ public class GuestbookController {
 
 	@Autowired
 	private GuestbookService guestbookService;
+	
+	@ExceptionHandler(Exception.class) 
+	public String handlerException() {
+		//log작업
+		//1. logging
+		
+		return "error/exception";//2.사과
+	}
 
 	@RequestMapping("")
 	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
 		model.addAttribute("list", list);
-		return "/WEB-INF/views/guestbook/list.jsp";
+		return "guestbook/list";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -37,7 +46,7 @@ public class GuestbookController {
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
 	public String deleteform(@PathVariable("no") Long no, Model model) {
 		model.addAttribute("no", no);
-		return "/WEB-INF/views/guestbook/deleteform.jsp";
+		return "guestbook/deleteform";
 	}
 
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.POST)
