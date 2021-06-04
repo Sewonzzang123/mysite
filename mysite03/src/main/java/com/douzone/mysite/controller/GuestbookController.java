@@ -22,13 +22,13 @@ public class GuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
 	
-	@ExceptionHandler(Exception.class) 
-	public String handlerException() {
-		//log작업
-		//1. logging
-		
-		return "error/exception";//2.사과
-	}
+//	@ExceptionHandler(Exception.class) 
+//	public String handlerException() {
+//		//log작업
+//		//1. logging
+//		
+//		return "error/exception";//2.사과
+//	}
 
 	@RequestMapping("")
 	public String index(Model model) {
