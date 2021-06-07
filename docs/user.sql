@@ -1,5 +1,6 @@
 -- --scheme
 desc user;
+-- role 추가해서 USER, ADMIN
 
 -- join(insert)
 insert 
