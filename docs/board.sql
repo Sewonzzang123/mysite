@@ -18,7 +18,7 @@ select max(group_no)
 from board;
 
 insert into board 
-values(null,'title6','contents',sysdate(),0,6,0,0,2);
+values(null,'title6','contents',sysdate(),0,41,0,0,2,0);
 
 -- 게시글 보기(update 후 select)
 update board

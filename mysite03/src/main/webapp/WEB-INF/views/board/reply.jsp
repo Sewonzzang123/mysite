@@ -15,10 +15,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type = "hidden" name = "a" value="reply">
-					<input type = "hidden" name = "no" value="${param.no }">
-					<input type = "hidden" name = "p" value="${param.p }">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/reply">
+					<input type = "hidden" name = "no" value="${requestScope.no }">
 					<input type = "hidden" name = "groupNo" value="${board.groupNo }">
 					<input type = "hidden" name = "orderNo" value="${board.orderNo }">
 					<input type = "hidden" name = "depth" value="${board.depth }">
@@ -38,7 +36,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=view&no=${param.no}&p=${param.p}">취소</a>
+						<a href="${pageContext.request.contextPath }/board/view/${requestScope.no}/${requestScope.p}">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

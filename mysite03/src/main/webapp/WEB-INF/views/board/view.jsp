@@ -33,9 +33,9 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=list&p=${param.p}">글목록</a> 
-					<c:if test="${not empty authUser && authUser.no == board.userNo }"><a href="${pageContext.request.contextPath }/board?a=updateform&no=${board.no}">글수정</a></c:if>
-					<c:if test="${not empty authUser }"><a href="${pageContext.request.contextPath }/board?a=replyform&no=${board.no}&p=${param.p}">답글쓰기</a></c:if>
+					<a href="${pageContext.request.contextPath }/board/${requestScope.p}">글목록</a> 
+					<c:if test="${not empty authUser && authUser.no == board.userNo }"><a href="${pageContext.request.contextPath }/board/update/${board.no}/${requestScope.p}">글수정</a></c:if>
+					<c:if test="${not empty authUser }"><a href="${pageContext.request.contextPath }/board/reply/${board.no}/${requestScope.p}">답글쓰기</a></c:if>
 				</div>
 			</div>
 		</div>
