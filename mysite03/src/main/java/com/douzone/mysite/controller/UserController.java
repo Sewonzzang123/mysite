@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -40,65 +41,23 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(
-			HttpSession session,
-			@RequestParam(value = "email", required = true, defaultValue = "") String email,
-			@RequestParam(value = "password", required = true, defaultValue = "") String password,
-			Model model) {
-		
-		UserVo authUser = userService.getUser(email,password);
-		if(authUser==null) {
-			model.addAttribute("result", "fail");
-			model.addAttribute("email", email);
-			return "user/login";
-		}
-		//session처리
-		session.setAttribute("authUser", authUser);
-		
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		//접근 제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser==null) {
-			return "redirect:/";
-		}
-		//로그아웃 처리
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:/";
-	}
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		//접근 제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser==null) {
-			return "redirect:/";
-		}
+	public String update(@AuthUser UserVo authUser, Model model) {
 		//접근제어와 함께 session의 no값을 필요로 하기 때문에 빼 낼수 없다		
 		//==>인터셉터, argument resolver, annotation
-		
-		Long no = authUser.getNo();
-		UserVo vo = userService.getUser(no);
+		UserVo vo = userService.getUser(authUser.getNo());
 		model.addAttribute("user", vo);
 		return "user/update";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(UserVo userVo, HttpSession session) {
-		//접근 제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser==null) {
-			return "redirect:/";
-		}
-		userVo.setNo(authUser.getNo());		
-		userService.updateUser(userVo);		
+	public String update(@AuthUser UserVo authUser,UserVo userVo, HttpSession session) {
+		
+		userVo.setNo(authUser.getNo());
+		userService.updateUser(userVo);
+		authUser.setName(userVo.getName());
 		
 		return "redirect:/user/update";
 	}

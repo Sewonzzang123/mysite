@@ -36,10 +36,4 @@ public class UserRepository {
 		return sqlSession.update("user.update", vo);
 	}
 	
-	public UserVo updateAuthUser(Long userNo) {
-		UserVo result = null;
-		
-		return result;
-
-	}
 }

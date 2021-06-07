@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.repository.GuestbookRepository;
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.GuestbookService;
 import com.douzone.mysite.vo.GuestbookVo;
 
@@ -29,7 +30,6 @@ public class GuestbookController {
 //		
 //		return "error/exception";//2.사과
 //	}
-
 	@RequestMapping("")
 	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
