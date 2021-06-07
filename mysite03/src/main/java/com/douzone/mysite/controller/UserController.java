@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -72,6 +73,7 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		//접근 제어
@@ -79,6 +81,9 @@ public class UserController {
 		if(authUser==null) {
 			return "redirect:/";
 		}
+		//접근제어와 함께 session의 no값을 필요로 하기 때문에 빼 낼수 없다		
+		//==>인터셉터, argument resolver, annotation
+		
 		Long no = authUser.getNo();
 		UserVo vo = userService.getUser(no);
 		model.addAttribute("user", vo);
