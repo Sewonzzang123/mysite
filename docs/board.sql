@@ -48,10 +48,10 @@ delete from board
 where no=7;
 
 -- 검색
-select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date
+select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date, a.contents
 from board a
 join user b on a.user_no = b.no 
-where a.title like '%ㄴㅇㄹ%' or a.contents like '%ㄴㅇㄹ%' 
+where a.title like concat('%','마루','%') or a.contents like concat('%','마루','%')
 order by a.group_no DESC, a.order_no ASC
 limit 0,5;
             
