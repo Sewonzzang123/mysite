@@ -15,12 +15,12 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 
-	public List<BoardVo> findByPage(String keyword,int pageNum) {
-		List<BoardVo> list = boardRepository.findByPage(keyword,pageNum);
+	public List<BoardVo> findByPage(String search, String keyword,int pageNum) {
+		List<BoardVo> list = boardRepository.findByPage(search,keyword,pageNum);
 		return list;
 	}
 
-	public Map<String, Integer> pageInfo(String keyword, String page) {
+	public Map<String, Integer> pageInfo(String search,String keyword, String page) {
 		int currentPage = Integer.parseInt(page);
 		double totalPage = 1;
 		int index=0;
@@ -30,10 +30,10 @@ public class BoardService {
 				}
 			 index = (int) boardRepository.findTotalPage();
 		} else {
-			if (Math.ceil(boardRepository.findTotalPage(keyword) / 5) != 0) {
-				totalPage = Math.ceil(boardRepository.findTotalPage(keyword) / 5);
+			if (Math.ceil(boardRepository.findTotalPage(search,keyword) / 5) != 0) {
+				totalPage = Math.ceil(boardRepository.findTotalPage(search,keyword) / 5);
 				}
-			index = (int) boardRepository.findTotalPage(keyword);
+			index = (int) boardRepository.findTotalPage(search,keyword);
 		}
 		int lastPageNo = 1;
 		if ((int) Math.ceil((double) currentPage / 5) * 5 != 0) {

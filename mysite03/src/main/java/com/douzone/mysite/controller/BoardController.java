@@ -28,17 +28,19 @@ public class BoardController {
 	@RequestMapping({ "", "/{p}","/search","/search/{p}"})
 	public String list(@PathVariable(value = "p", required = false) String page, Model model,HttpServletRequest request) {
 		String keyword = request.getParameter("kwd");
+		String search = request.getParameter("search");
 		if(keyword==null) {
 			keyword="";
 		}
 		if (page == null) {
 			page = "1";
-		}
-		List<BoardVo> list = boardService.findByPage(keyword,Integer.parseInt(page));
-		Map<String, Integer> map = boardService.pageInfo(keyword,page);
+		}	
+		List<BoardVo> list = boardService.findByPage(search,keyword,Integer.parseInt(page));
+		Map<String, Integer> map = boardService.pageInfo(search,keyword,page);
 		model.addAttribute("pageInfo", map);
 		model.addAttribute("list", list);
 		model.addAttribute("kwd", keyword);
+		model.addAttribute("search", search);
 		return "board/list";
 	}
 

@@ -15,12 +15,13 @@ public class BoardRepository {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
-	public List<BoardVo> findByPage(String keyword, int pageNum) {
+
+	public List<BoardVo> findByPage(String search, String keyword, int pageNum) {
 		Map<String, String> map = new HashMap<>();
 		map.put("keyword", keyword);
 		pageNum = ((pageNum - 1) * 5);
 		map.put("pageNum", String.valueOf(pageNum));
+		map.put("search", search);
 		return sqlSession.selectList("board.findByPage", map);
 		
 	}
@@ -66,8 +67,11 @@ public class BoardRepository {
 
 	}
 
-	public double findTotalPage(String keyword) {
-		return sqlSession.selectOne("board.findTotalPageBySearch", keyword);
+	public double findTotalPage(String search,String keyword) {
+		Map<String, String> map = new HashMap<>();
+		map.put("search", search);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("board.findTotalPageBySearch", map);
 	}
 
 	public boolean updateDelete(Long no) {
