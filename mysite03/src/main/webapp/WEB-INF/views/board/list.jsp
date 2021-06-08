@@ -18,12 +18,12 @@
 			<div id="board">
 				<form id="search_form"
 					action="${pageContext.request.contextPath }/board/search"
-					method="get">
+					method="get">			
 					<select name="search">
-						<option <c:if test='${empty search || search=="TC" }'>selected="selected"</c:if> value="TC">제목+내용</option>
-						<option <c:if test='${search=="T" }'>selected="selected"</c:if> value="T">제목</option>
-						<option <c:if test='${search=="C" }'>selected="selected"</c:if> value="C">내용</option>
-						<option <c:if test='${search=="N" }'>selected="selected"</c:if> value="N">작성자</option>
+						<option <c:if test='${empty kwd || empty search || search=="TC" }'>selected="selected"</c:if> value="TC">제목+내용</option>
+						<option <c:if test='${not empty kwd && search=="T" }'>selected="selected"</c:if> value="T">제목</option>
+						<option <c:if test='${not empty kwd && search=="C" }'>selected="selected"</c:if> value="C">내용</option>
+						<option <c:if test='${not empty kwd && search=="N" }'>selected="selected"</c:if> value="N">작성자</option>
 					</select>
 					<input type="text" id="kwd" name="kwd" value="${kwd }"> <input
 						type="submit" value="찾기">
