@@ -28,7 +28,7 @@ where no=1;
 select a.no, a.title, a.contents, a.reg_date, a.hit, a.group_no, a.order_no, a.depths, b.name
 from board a, user b
 where a.user_no = b.no
-and a.no=1;
+and a.no=68;
 
 -- 답글 쓰기 (update 후 insert)
 update board
@@ -51,7 +51,9 @@ where no=7;
 select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date, a.contents
 from board a
 join user b on a.user_no = b.no 
-where a.title like concat('%','마루','%') or a.contents like concat('%','마루','%')
+-- where a.title like concat('%','마루','%') or a.contents like concat('%','마루','%') -- TC
+where a.title like concat('%','마루','%') -- T
+-- where a.contents like concat('%','마루','%')
 order by a.group_no DESC, a.order_no ASC
 limit 0,5;
             
