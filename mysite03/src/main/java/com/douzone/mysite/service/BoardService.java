@@ -25,15 +25,17 @@ public class BoardService {
 		double totalPage = 1;
 		int index=0;
 		if ("".equals(keyword)) {
-			if (Math.ceil(boardRepository.findTotalPage() / 5) != 0) {
-				totalPage = Math.ceil(boardRepository.findTotalPage() / 5);
+			 	totalPage = boardRepository.findTotalPage();
+			if (Math.ceil(totalPage / 5) != 0) {
+				totalPage = Math.ceil(totalPage / 5);
 				}
-			 index = (int) boardRepository.findTotalPage();
+			 index = (int) totalPage;
 		} else {
-			if (Math.ceil(boardRepository.findTotalPage(search,keyword) / 5) != 0) {
-				totalPage = Math.ceil(boardRepository.findTotalPage(search,keyword) / 5);
+				totalPage = boardRepository.findTotalPage(search,keyword);
+			if (Math.ceil(totalPage / 5) != 0) {
+				totalPage = Math.ceil(totalPage / 5);
 				}
-			index = (int) boardRepository.findTotalPage(search,keyword);
+			index = (int) totalPage;
 		}
 		int lastPageNo = 1;
 		if ((int) Math.ceil((double) currentPage / 5) * 5 != 0) {
