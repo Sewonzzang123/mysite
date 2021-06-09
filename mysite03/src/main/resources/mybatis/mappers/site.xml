@@ -7,6 +7,12 @@
 	</select>
 	<update id="update" parameterType="sitevo">
 	update site
-	set title=#{title } , welcome=#{welcome }, profile=#{profile }, description=#{description }		
+	set title=#{title } , welcome=#{welcome }, description=#{description }	
+	<choose>
+	<when test=' "".equals(profile) == false '>
+		, profile=#{profile }
+	</when>
+	
+	</choose>	
 	</update>
 </mapper>

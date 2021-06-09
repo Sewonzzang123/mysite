@@ -20,7 +20,7 @@
 			<div id="content">
 				<div id="site-introduction">
 					<img id="profile"
-						src="${pageContext.request.contextPath }/${siteVo.profile }"
+						src="${pageContext.request.contextPath }${siteVo.profile }"
 						style='width: 150px; height: 150px;'>
 					<h2>${siteVo.welcome }</h2>
 					<p>
