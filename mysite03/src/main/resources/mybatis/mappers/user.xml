@@ -22,9 +22,17 @@
 	<!-- 값 자체가 넘어오기 때문에 no에 아무거나 줘도 되지만, 알아볼 수 있는 이름으로 표기 -->
 	<select id="findByNo" parameterType="long" resultType="uservo">
 		<![CDATA[
-		select no, name, email, gender
+		select no, name, email, gender 
 	 	  from user 
 		 where no=#{userNo } 
+		]]>
+	</select>
+
+	<select id="findByEmail" parameterType="String" resultType="uservo">
+		<![CDATA[
+		select no, name, email, gender 
+	 	  from user 
+		 where email=#{email } 
 		]]>
 	</select>
 
@@ -47,7 +55,7 @@
 				 where  no=#{no }					
 					]]>
 			</otherwise>
-			</choose>
+		</choose>
 	</update>
 
 </mapper>

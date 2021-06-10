@@ -27,10 +27,17 @@ public class UserService {
 		return result;
 		
 	}
+	
+	public UserVo getUser(String email) {
+		UserVo result = userRepository.findByEmail(email);
+		return result;
+	}
 
 	public boolean updateUser(UserVo userVo) {
 		int result = userRepository.update(userVo);
 		return result==1;
 	}
+
+
 
 }
