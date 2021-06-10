@@ -1,6 +1,7 @@
 package com.douzone.mysite.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,18 @@ public class GalleryController {
 	@Autowired
 	private FileUploadService fileUploadService;
 	
-	@RequestMapping("")
-	public String index(Model model) {
-		List<GalleryVo> list = galleryService.findAll();
+	@RequestMapping({"","/{p}"})
+	public String index(Model model,@PathVariable(value= "p", required=false)String page) {
+		if (page == null) {
+			page = "1";
+		}	
+		List<GalleryVo> list = galleryService.findByPage(Integer.parseInt(page));
+		Map<String, Integer> map = galleryService.pageInfo(Integer.parseInt(page));
+		for(GalleryVo vo :list) {
+			System.out.println(vo);
+		}
+		System.out.println(map.toString());
+		model.addAttribute("pageInfo", map);
 		model.addAttribute("list", list);
 		return "gallery/index";
 	}

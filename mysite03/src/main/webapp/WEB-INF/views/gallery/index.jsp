@@ -9,6 +9,7 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/gallery.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/assets/css/lightbox.css" rel="stylesheet" type="text/css">
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
@@ -53,7 +54,7 @@ $(function(){
 					<a href="" id="upload-image">이미지 올리기</a>
 				</div>
 				<ul>
-				<c:forEach var="image" items="${list }" >
+				<c:forEach begin="0" end="15" var="image" items="${list }" >
 						<li>
 							<a	href="${pageContext.request.contextPath }${image.url}"
 								data-lightbox="gallery"
@@ -66,8 +67,41 @@ $(function(){
 						</li>
 				</c:forEach>																																			
 				</ul>	
+				
 			</div>
-
+<div class="pager">
+						<ul>
+							<c:if test="${pageInfo.firstPageNo>1 && pageInfo.lastPageNo>5}">
+								<li><a
+									href="${pageContext.request.contextPath }/gallery/${pageInfo.firstPageNo-5}">◀◀</a></li>
+							</c:if>
+							<c:if test="${pageInfo.currentPage>1}">
+								<li><a
+									href="${pageContext.request.contextPath }/gallery/${pageInfo.prevPageNo}">◀</a></li>
+							</c:if>
+							<c:forEach begin="${pageInfo.firstPageNo }"
+								end="${pageInfo.lastPageNo }" var="page">
+								<c:if test="${page==pageInfo.currentPage}">
+									<li class="selected">${page }</li>
+								</c:if>
+								<c:if
+									test="${page<=pageInfo.totalPage && page!=pageInfo.currentPage}">
+									<li><a
+										href="${pageContext.request.contextPath }/gallery/${page }">${page }</a></li>
+								</c:if>
+								<c:if
+									test="${page>pageInfo.totalPage && pageInfo.totalPage<pageInfo.lastPageNo }">${page } </c:if>
+							</c:forEach>
+							<c:if test="${pageInfo.currentPage<pageInfo.totalPage}">
+								<li><a
+									href="${pageContext.request.contextPath }/gallery/${pageInfo.nextPageNo}">▶</a></li>
+							</c:if>
+							<c:if test="${pageInfo.lastPageNo<pageInfo.totalPage}">
+								<li><a
+									href="${pageContext.request.contextPath }/gallery/${pageInfo.lastPageNo+1}">▶▶</a></li>
+							</c:if>
+						</ul>
+					</div>
 			<div id="dialog-upload-form" title="이미지 업로드" style="display:none">
   				<p class="validateTips normal">이미지와 간단한 코멘트를 입력해 주세요.</p>
   				<form action="${pageContext.request.contextPath }/gallery/upload" 
