@@ -18,17 +18,28 @@
 		var btn =$('#btn-check');
 		btn.click(function(){
 			var email = $('#email').val();
+			if(email==""){
+				alert('이메일을 작성해 주세요');
+				$('#email').focus();
+				return;
+			}
 			$.ajax({
 					url:"/mysite03/user/api/checkemail?email="+email,
 					type:"get",
 					dataType:"json",
-					success:function(response){			
+					error:function(xhr, status, e){
+						//xml http request
+						//status
+						//error
+						console.error(status,e);
+						return;
+					},
+					success:function(response){	
 						if(response.result != "success"){ //통신 실패
-							console.log("error");
+							console.error(response.message);
 							return;
-						}
-						
-						if(response.exist){
+						}				
+						if(response.data){
 							alert('존재하는 이메일 입니다. 다른 이메일을 사용해 주세요.');
 							$('#email').val("");
 							$('#email').focus();

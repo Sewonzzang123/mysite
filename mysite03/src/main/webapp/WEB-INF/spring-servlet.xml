@@ -71,7 +71,7 @@
 
 	<!-- mvc resources mapping -->
 	<mvc:resources location="file:/uploads-mysite/"
-		mapping="/assets/images/**"></mvc:resources>
+		mapping="/images/**" />
 
 	<!-- Multipart resolver -->
 	<bean

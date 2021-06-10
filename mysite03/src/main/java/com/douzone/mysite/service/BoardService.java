@@ -26,16 +26,16 @@ public class BoardService {
 		int index=0;
 		if ("".equals(keyword)) {
 			 	totalPage = boardRepository.findTotalPage();
+			 	index = (int) totalPage;
 			if (Math.ceil(totalPage / 5) != 0) {
 				totalPage = Math.ceil(totalPage / 5);
-				}
-			 index = (int) totalPage;
+				}			 
 		} else {
 				totalPage = boardRepository.findTotalPage(search,keyword);
+				index = (int) totalPage;
 			if (Math.ceil(totalPage / 5) != 0) {
 				totalPage = Math.ceil(totalPage / 5);
-				}
-			index = (int) totalPage;
+				}			
 		}
 		int lastPageNo = 1;
 		if ((int) Math.ceil((double) currentPage / 5) * 5 != 0) {

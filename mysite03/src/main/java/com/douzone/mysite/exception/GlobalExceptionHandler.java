@@ -1,44 +1,55 @@
 package com.douzone.mysite.exception;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.douzone.mysite.dto.JsonResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	private static final Log LOGGER = LogFactory.getLog(GlobalExceptionHandler.class);
-	
-	
+
 	@ExceptionHandler(Exception.class)
-	public String handlerException(Model model, Exception e) {
+	public void handlerException(HttpServletRequest request, // header를 알아야 하기 때문에
+			HttpServletResponse response, // request,response
+			Exception e) throws Exception {
 		// 1. 로깅(logging)
-		
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
-		
-//		System.out.println(errors);
-		/**
-		 * 1. appender
-		 * 		-file appender /log-mysite/exception.1.log.zip....
-		 * 		 10MB (Archiving 정책)
-		 * 		 1-10 (rolling)
-		 * 		-console appender
-		 * 2. logger -com.douzone.mysite.exception (처음에는 default로 해봐라)
-		 * 		 (level:error),(console+file) appender
-		 *	  logger -Root, level(debug),(console) appender
-		 * 
-		 */
 		LOGGER.error(errors.toString());
-		
-		// 2. 사과 페이지
-		// 3. 정상 종료
-		model.addAttribute("exception", errors.toString());		
-		return "error/exception";
+
+		// 2. 요청 구분
+		// 만약, JSON 요청인 경우이면 request header의 Accept에 applicaion/json이있음
+		// html 요청인 경우이면 text/html
+		String accept = request.getHeader("accept");
+
+		if (accept.matches(".*application/json.*")) {
+			
+			// 3-1. json 응답
+			response.setStatus(HttpServletResponse.SC_OK);
+			
+			JsonResult result = JsonResult.fail(errors.toString());
+			String jsonString = new ObjectMapper().writeValueAsString(result);
+			
+			OutputStream os = response.getOutputStream();
+			
+			os.write(jsonString.getBytes("UTF-8"));
+			os.close();
+		} else {
+			// 3-2. 사과 페이지 가기(정상 종료)
+			request.setAttribute("exception", errors.toString());
+			request.getRequestDispatcher("/WEB-INF/views/error/exception.jsp").forward(request, response);
 		}
+	}
 
 }
