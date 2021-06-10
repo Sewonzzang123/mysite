@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<% pageContext.setAttribute("newline", "\n"); %>
+<%
+pageContext.setAttribute("newline", "\n");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -24,9 +26,9 @@
 						style='width: 150px; height: 150px;'>
 					<h2>${siteVo.welcome }</h2>
 					<p>
-						${fn:replace(siteVo.description , newline, "<br/>") }							
-						<br> <br> <a href="${pageContext.request.contextPath }/guestbook">방명록</a>에
-						글 남기기<br>
+						${fn:replace(siteVo.description , newline, "<br/>") } <br> <br>
+						<a href="${pageContext.request.contextPath }/guestbook">방명록</a>에 글
+						남기기<br>
 					</p>
 				</div>
 			</div>

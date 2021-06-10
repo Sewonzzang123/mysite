@@ -17,13 +17,13 @@ import com.douzone.mysite.vo.SiteVo;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@Autowired
 	private SiteService siteService;
 	
 	@Autowired
 	private FileUploadService fileUploadService;
-//	1. application scope 2.fileupload처럼하기
+//	1. application scope >>?????
 //	
 	
 	@RequestMapping("")

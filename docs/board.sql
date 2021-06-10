@@ -52,10 +52,11 @@ select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date, a.
 from board a
 join user b on a.user_no = b.no 
 -- where a.title like concat('%','마루','%') or a.contents like concat('%','마루','%') -- TC
-where a.title like concat('%','마루','%') -- T
--- where a.contents like concat('%','마루','%')
+-- where a.title like concat('%','마루','%') -- T
+-- where a.contents like concat('%','마루','%') --C
+where b.name like concat('%','마루','%') -- N
 order by a.group_no DESC, a.order_no ASC
-limit 0,5;
+limit 20,5;
             
 select count(*)
 from (select distinct a.no, a.title, a.depths, a.hit, a.user_no,b.name, a.reg_date

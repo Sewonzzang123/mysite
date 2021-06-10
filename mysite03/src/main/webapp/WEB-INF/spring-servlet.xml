@@ -11,8 +11,27 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
+
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value><!-- String ISO..를 UTF-8로변경 -->
+					</list>
+				</property>
+			</bean>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value><!-- applicaion/json -->
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
 		<mvc:argument-resolvers>
 			<bean
 				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
@@ -51,7 +70,8 @@
 	</bean>
 
 	<!-- mvc resources mapping -->
-	<mvc:resources location="file:/uploads-mysite/" mapping="/assets/images/**"></mvc:resources>
+	<mvc:resources location="file:/uploads-mysite/"
+		mapping="/assets/images/**"></mvc:resources>
 
 	<!-- Multipart resolver -->
 	<bean

@@ -10,6 +10,26 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 </head>
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js" ></script>
+<script>
+//	# : id
+// $가있으면 jquery...
+	$(function(){
+		var btn =$('#btn-check');
+		btn.click(function(){
+			$.ajax({
+					url:"/mysite03/user/api/checkemail?email=jangsewon@email.com",
+					type:"get",
+					dataType:"json",
+					success:function(response){			
+						console.log(response);
+					}
+			});
+		});
+	});
+	
+
+</script>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
@@ -22,7 +42,7 @@
 
 					<label class="block-label" for="email">이메일</label>
 					<input id="email" name="email" type="text" value="">
-					<input type="button" value="id 중복체크">
+					<input type="button" id="btn-check" value="id 중복체크">
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
