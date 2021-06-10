@@ -19,6 +19,10 @@ from user
 where email ='jangsewon@email.com' 
 and password = 1234;
 
+select no, name
+from user
+where email="";
+
 -- update
 update user
 set name=? , password=? , gender=?
