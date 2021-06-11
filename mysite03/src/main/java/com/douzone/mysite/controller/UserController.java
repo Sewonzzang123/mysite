@@ -42,7 +42,7 @@ public class UserController {
 //			model.addAttribute("user", vo); @ModelAttribute annotation이 해 준다.
 			return "user/joinform";
 		}
-//		userService.join(vo);
+		userService.join(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 

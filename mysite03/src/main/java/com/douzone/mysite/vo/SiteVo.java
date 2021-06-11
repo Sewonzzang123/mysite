@@ -1,9 +1,14 @@
 package com.douzone.mysite.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class SiteVo {
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String welcome;
 	private String profile;
+	@NotEmpty
 	private String description;
 	public String getTitle() {
 		return title;

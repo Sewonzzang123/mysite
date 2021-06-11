@@ -32,3 +32,7 @@ insert into gallery
 values(null, '이미지15','/assets/gallery-examples/im15.jpg');
 
 delete from gallery where no=15;
+
+select no, comment, url 
+from gallery
+limit 0,5;

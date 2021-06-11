@@ -1,8 +1,15 @@
 package com.douzone.mysite.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,17 +30,23 @@ public class AdminController {
 	
 	@Autowired
 	private FileUploadService fileUploadService;
-//	1. application scope >>?????
-//	
 	
 	@RequestMapping("")
-	public String main(Model model) {
-		SiteVo vo = siteService.getSite();
+	public String main(@ModelAttribute SiteVo vo,Model model) {
+		vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
 		return "admin/main";
 	}
 	@RequestMapping(value="/main/update", method=RequestMethod.POST)
-	public String updateMain(SiteVo vo, @RequestParam("profileimage") MultipartFile profile) {
+	public String updateMain(
+			@ModelAttribute @Valid SiteVo vo,BindingResult result,
+			@RequestParam("profileimage") MultipartFile profile,		
+			Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("profileimage", siteService.getSite().getProfile());
+			model.addAllAttributes(result.getModel());
+			return "admin/main";
+		}
 		//profile을 살펴보기
 		String url = fileUploadService.restore(profile);
 		vo.setProfile(url);

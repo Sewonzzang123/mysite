@@ -58,7 +58,7 @@ public class BoardController {
 		return "board/write";
 	}
 
-	@Auth
+
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(@AuthUser UserVo authUser, HttpServletRequest request) {
 		BoardVo vo = new BoardVo();
