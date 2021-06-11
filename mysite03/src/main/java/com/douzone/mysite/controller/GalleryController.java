@@ -32,12 +32,12 @@ public class GalleryController {
 			page = "1";
 		}	
 		List<GalleryVo> list = galleryService.findByPage(Integer.parseInt(page));
-		Map<String, Integer> map = galleryService.pageInfo(Integer.parseInt(page));
+//		Map<String, Integer> map = galleryService.pageInfo(Integer.parseInt(page));
 		for(GalleryVo vo :list) {
 			System.out.println(vo);
 		}
-		System.out.println(map.toString());
-		model.addAttribute("pageInfo", map);
+//		System.out.println(map.toString());
+//		model.addAttribute("pageInfo", map);
 		model.addAttribute("list", list);
 		return "gallery/index";
 	}

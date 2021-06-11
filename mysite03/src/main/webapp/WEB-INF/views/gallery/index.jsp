@@ -54,7 +54,7 @@ $(function(){
 					<a href="" id="upload-image">이미지 올리기</a>
 				</div>
 				<ul>
-				<c:forEach begin="0" end="15" var="image" items="${list }" >
+				<c:forEach var="image" items="${list }" >
 						<li>
 							<a	href="${pageContext.request.contextPath }${image.url}"
 								data-lightbox="gallery"
@@ -69,6 +69,7 @@ $(function(){
 				</ul>	
 				
 			</div>
+			<%-- 
 <div class="pager">
 						<ul>
 							<c:if test="${pageInfo.firstPageNo>1 && pageInfo.lastPageNo>5}">
@@ -102,6 +103,7 @@ $(function(){
 							</c:if>
 						</ul>
 					</div>
+					--%>
 			<div id="dialog-upload-form" title="이미지 업로드" style="display:none">
   				<p class="validateTips normal">이미지와 간단한 코멘트를 입력해 주세요.</p>
   				<form action="${pageContext.request.contextPath }/gallery/upload" 

@@ -1,14 +1,9 @@
 package com.douzone.mysite.controller.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douzone.mysite.dto.JsonResult;
@@ -29,8 +24,8 @@ public class UserController {
 		UserVo userVo = userService.getUser(email);
 		boolean data = (userVo != null);
 		
-//		JsonResult result = JsonResult.success(data);
-//		JsonResult result2 = JsonResult.fail("....");
+//		JsonResult result = JsonResult.success(data); >>문제없이 checkemail을 하였으므로 success
+//		JsonResult result2 = JsonResult.fail("...."); >>globalExceptionHandler에서 fail을 준다.
 		
 		return JsonResult.success(data);
 	}
