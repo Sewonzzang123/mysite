@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -15,29 +16,35 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/update">
-					<input type="hidden" name="userNo" value="${board.userNo }"/>
-					<input type="hidden" name="no" value="${board.no }"/>
+				<form:form 
+				modelAttribute="boardVo"
+				class="board-form" 
+				method="post" 
+				action="${pageContext.request.contextPath }/board/update">
+					<form:hidden path="userNo"/>
+					<form:hidden path="no" />
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
-							<td><input type="text" name="title" value="${board.title }"></td>
+							<td>
+								<form:input path="title" /><form:errors style="color:red" path="title" /></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">${board.content }</textarea>
+							<form:textarea path="content"/><form:errors style="color:red" path="content" />
+								
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board/view/${board.no}/${requestScope.p}">취소</a>
+						<a href="${pageContext.request.contextPath }/board/view/${boardVo.no}/${requestScope.p}">취소</a>
 						<input type="submit" value="등록">
 					</div>
-				</form>				
+				</form:form>				
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

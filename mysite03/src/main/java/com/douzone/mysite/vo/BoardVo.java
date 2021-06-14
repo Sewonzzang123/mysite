@@ -1,9 +1,18 @@
 package com.douzone.mysite.vo;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class BoardVo {
 	private Long no;
+	
+	@NotEmpty
+	@Length(min=2,max=10)
 	private String title;
+	@NotEmpty
+	@Length(min=2)
 	private String content;
+	
 	private String regDate;
 	private int hit;
 	private int groupNo;
