@@ -10,5 +10,5 @@ values('MySite',
 
 select *
 from site;
-update site set title='MySite';
+update site set profile='/images/202151064247472';
 delete from site where title like 'My%';
