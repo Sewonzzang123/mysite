@@ -99,7 +99,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 	 * <!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 --> 
 	 * <mvc:default-servlet-handler />
 	 */
-	
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
