@@ -12,14 +12,13 @@
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
 
-	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
+	<!-- Validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-			<bean
-				class="org.springframework.http.converter.StringHttpMessageConverter">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-						<value>text/html; charset=UTF-8</value><!-- String ISO..를 UTF-8로변경 -->
+						<value>text/html; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
@@ -27,11 +26,12 @@
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-						<value>application/json; charset=UTF-8</value><!-- applicaion/json -->
+						<value>application/json; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
 		</mvc:message-converters>
+
 		<mvc:argument-resolvers>
 			<bean
 				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
@@ -40,7 +40,6 @@
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
-
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
@@ -54,8 +53,8 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/user/logout" />
 			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
 			<mvc:exclude-mapping path="/assets/**" />
 			<bean class="com.douzone.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>
@@ -70,14 +69,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- mvc resources mapping -->
-	<mvc:resources location="file:/uploads-mysite/"
-		mapping="/images/**" />
-
-	<!-- Multipart resolver -->
-	<bean
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		id="multipartResolver">
+	<!-- Multipart Resolver -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 최대업로드 가능한 바이트크기 -->
 		<property name="maxUploadSize" value="52428800" />
 		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
@@ -86,19 +80,21 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+	<!-- mvc resources mapping -->
+	<mvc:resources location="file:/uploads-mysite/"
+		mapping="/images/**" />
+
 	<!-- 6. MessageSource -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>messages/message_ko</value>
+				<value>messages/messages_ko</value>
 			</list>
 		</property>
 	</bean>
 
 	<context:annotation-config />
 	<context:component-scan
-		base-package="com.douzone.mysite.controller,com.douzone.mysite.exception" />
-
+		base-package="com.douzone.mysite.controller, com.douzone.mysite.exception" />
 
 </beans>

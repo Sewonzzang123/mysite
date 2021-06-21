@@ -23,7 +23,7 @@ public class UserController {
 	public JsonResult checkEmail(@RequestParam(value = "email", required = true, defaultValue = "") String email) {
 		UserVo userVo = userService.getUser(email);
 		boolean data = (userVo != null);
-		
+	
 //		JsonResult result = JsonResult.success(data); >>문제없이 checkemail을 하였으므로 success
 //		JsonResult result2 = JsonResult.fail("...."); >>globalExceptionHandler에서 fail을 준다.
 		

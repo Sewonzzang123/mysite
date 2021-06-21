@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 쿼리 넣으면 됨 -->
+<!-- <![CDATA[]]> : sql문 중에 >나<가있을경우에 사용 -->
+<mapper namespace="guestbook">
+	<select id="findAll" resultType="guestbookvo">	
+	<![CDATA[
+		select no, name, message, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate
+		  from guestbook
+	  order by reg_date desc
+	  ]]>
+	</select>
+
+	<!-- insert하고나서의 pk값을 가져올 수 있는 selectKey -->
+	<insert id="insert" parameterType="guestbookvo">
+	<![CDATA[
+		insert 
+		  into guestbook 
+		values (null,#{name },#{password },#{message },sysdate()) 
+		 ]]>
+		<selectKey keyProperty="no" resultType="Long" order="AFTER">
+		<![CDATA[
+			select last_insert_id()
+			 ]]>
+		</selectKey>
+	</insert>
+
+
+	<delete id="delete" parameterType="guestbookvo">
+	<![CDATA[
+	delete 
+	  from guestbook
+	 where no=#{no} and password=#{password } 
+	  ]]>
+	</delete>
+
+</mapper>
+

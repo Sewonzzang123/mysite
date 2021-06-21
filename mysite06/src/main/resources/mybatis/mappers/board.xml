@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="findByPage" parameterType="map" resultType="boardvo">
+	<![CDATA[
+		select	a.no as no, a.title as title, a.depths as depth,
+				a.hit as hit, a.user_no as userNo, b.name as userName,
+				a.reg_date as regDate, a.parent_no as parentNo
+		  from board a
+		  join user b on a.user_no = b.no
+		 ]]>
+		<choose>
+			<when test='"".equals(keyword)'>
+				order by a.group_no DESC, a.order_no ASC
+				limit ${pageNum },5
+			</when>
+			<when test='"T".equals(search)'>
+				where a.title like concat('%',#{keyword },'%')
+				order by a.group_no DESC, a.order_no ASC
+				limit ${pageNum },5
+			</when>
+			<when test='"C".equals(search)'>
+				where a.contents like concat('%',#{keyword },'%')
+				order by a.group_no DESC, a.order_no ASC
+				limit ${pageNum },5
+			</when>
+			<when test='"N".equals(search)'>
+				where b.name like concat('%',#{keyword },'%')
+				order by a.group_no DESC, a.order_no ASC
+				limit ${pageNum },5
+			</when>
+			<otherwise>
+			   where a.title like concat('%',#{keyword },'%')
+				  or a.contents like concat('%',#{keyword },'%')
+				order by a.group_no DESC, a.order_no ASC
+				limit ${pageNum },5
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findTotalPage" resultType="double">
+	<![CDATA[
+		select count(*)
+		from board
+		]]>
+	</select>
+
+	<update id="updateHit" parameterType="Long">
+	<![CDATA[
+		update board 
+	       set hit=hit+1 
+	 	 where no=#{boardNo } 
+	 	 ]]>
+	</update>
+
+	<select id="findByNo" parameterType="Long" resultType="boardvo">
+	<![CDATA[
+		select a.no as no, a.title as title , a.contents as content, 
+				a.reg_date as regDate, a.hit as hit, a.group_no as groupNo, a.order_no as orderNo,
+		  		a.depths as depth,a.user_no as userNo, b.name as userName
+		  from board a, user b 
+		 where a.user_no = b.no 
+		   and a.no=#{boardNo } 
+		   ]]>
+	</select>
+	<select id="findMaxGroupNo" resultType="int">
+	<![CDATA[
+		select max(group_no) 
+		  from board 
+		  ]]>
+	</select>
+	<insert id="insert" parameterType="boardvo">
+	<![CDATA[
+		insert into board 
+		values (null,#{title } ,#{content } ,sysdate(),0, #{groupNo } ,
+				#{orderNo } ,#{depth },#{userNo },#{parentNo }) 
+	]]>
+		<selectKey keyProperty="no" resultType="Long" order="AFTER">
+		<![CDATA[
+			select last_insert_id()
+			 ]]>
+		</selectKey>
+	</insert>
+
+	<update id="update" parameterType="boardvo">
+	<![CDATA[
+		update board 
+		   set title=#{title }, contents=#{content }, reg_date=sysdate() 
+		 where no=#{no } 
+	]]>
+	</update>
+	<update id="reply" parameterType="map">
+	<![CDATA[
+		update board 
+		   set order_no=order_no+1 
+		 where group_no=#{groupNo}
+		   and order_no>=#{orderNo}
+	]]>
+	</update>
+
+	<delete id="delete" parameterType="Long">
+		delete from board
+		where no=#{no }
+	</delete>
+	<update id="updateDelete" parameterType="Long">
+		update board
+		set parent_no=-1
+		where parent_no=#{no }
+	</update>
+
+	<select id="findTotalPageBySearch" parameterType="map"
+		resultType="double">
+		select count(*)
+		from (select distinct a.no, a.title, a.depths, a.hit, a.user_no , b.name,
+		a.reg_date
+		from board a
+		join user b on a.user_no = b.no
+		<choose>
+			<when test="'TC'.equals(search)">
+				where a.title like concat('%',#{keyword },'%')
+				or a.contents like concat('%',#{keyword },'%'))c
+			</when>
+			<when test="'T'.equals(search)">
+				where a.title like concat('%',#{keyword },'%'))c
+			</when>
+			<when test='"C".equals(search)'>
+				where a.contents like concat('%',#{keyword },'%'))c
+			</when>
+			<otherwise>
+				where b.name like concat('%',#{keyword },'%'))c
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

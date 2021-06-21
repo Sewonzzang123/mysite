@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- appender의 갯수는 3개 console, file2, file3 file2, 3 /logex/logex2.log,3log파일을 
+		드라이브쪽에서 찾아 볼 수 있다. rolling policy : 1번부터 10번까지 ,50KB를 넘게 되면 ZIP -->
+	<appender name="consoleAppender"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>UTF-8</charset>
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="fileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/log-mysite/exception.log</file>
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>/log-mysite/exception.%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<logger name="com.douzone.mysite.exception" level="error"
+		additivity="false">
+		<appender-ref ref="fileAppender" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	<!-- 루트(글로벌) 로거 -->
+	<root level="info">
+	 	<appender-ref ref="consoleAppender" /> 
+	</root>
+
+</configuration>
