@@ -35,6 +35,8 @@ import com.douzone.mysite.security.LogoutInterceptor;
 @SpringBootConfiguration
 @PropertySource("classpath:com/douzone/mysite/config/WebConfig.properties")
 public class WebConfig implements WebMvcConfigurer{
+	@Autowired
+	private Environment env;
 	
 	
 	@Bean
@@ -65,15 +67,15 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry
 			.addInterceptor(loginInterceptor())
-			.addPathPatterns("/user/auth");
+			.addPathPatterns(env.getProperty("security.auth-url"));
 		registry
 			.addInterceptor(logoutInterceptor())
-			.addPathPatterns("/user/logout");
+			.addPathPatterns(env.getProperty("security.logout"));
 		registry
 			.addInterceptor(authInterceptor())
 			.addPathPatterns("/**")
-			.excludePathPatterns("/user/logout")
-			.excludePathPatterns("/user/auth")
+			.excludePathPatterns(env.getProperty("security.logout"))
+			.excludePathPatterns(env.getProperty("security.auth-url"))
 			.excludePathPatterns("/assets/**");
 	}
 	
@@ -110,18 +112,6 @@ public class WebConfig implements WebMvcConfigurer{
 		converters.add(stringHttpMessageConverter());
 		converters.add(mappingJackson2HttpMessageConverter());
 	}
-	
-	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = 
-				new ResourceBundleMessageSource();
-		messageSource.setBasename("com/douzone/mysite/config/web/message_ko");
-		messageSource.setDefaultEncoding("utf-8");
-		return messageSource;
-	}
-	
-	@Autowired
-	private Environment env;
 	
 	
 	//Resource Mapping(URL Magic Mapping)
