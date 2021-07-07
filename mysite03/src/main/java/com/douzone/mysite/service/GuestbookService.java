@@ -19,7 +19,6 @@ public class GuestbookService {
 	}
 	
 	public List<GuestbookVo> getMessageList(Long no) {		
-		// no : 기준
 		return guestbookRepository.findAll(no);
 	}
 	
@@ -27,7 +26,7 @@ public class GuestbookService {
 		return guestbookRepository.delete(no, password);
 	}
 	
-	public boolean addMessage(GuestbookVo vo) {
+	public Long addMessage(GuestbookVo vo) {
 		return guestbookRepository.insert(vo);
 	}
 	

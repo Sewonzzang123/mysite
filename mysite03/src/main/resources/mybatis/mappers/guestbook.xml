@@ -11,6 +11,8 @@
 	  ]]>
 	</select>
 
+
+
 	<!-- insert하고나서의 pk값을 가져올 수 있는 selectKey -->
 	<insert id="insert" parameterType="guestbookvo">
 	<![CDATA[
@@ -33,6 +35,24 @@
 	 where no=#{no} and password=#{password } 
 	  ]]>
 	</delete>
+
+	<!-- Rest -->
+	<select id="findAllByNo" parameterType="Long"
+		resultType="guestbookvo">	
+	<![CDATA[
+		select no, name, message, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate
+		  from guestbook
+		    ]]>
+		<choose>
+			<when test="value != -1">
+		  <![CDATA[ where no < #{value } ]]></when>
+		</choose>
+		order by reg_date desc
+		limit 0,3
+	</select>
+	
+
+
 
 </mapper>
 

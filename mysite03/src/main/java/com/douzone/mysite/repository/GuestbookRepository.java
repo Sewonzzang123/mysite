@@ -17,11 +17,9 @@ public class GuestbookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insert(GuestbookVo vo) {
-		System.out.println(vo);
-		int count = sqlSession.insert("guestbook.insert", vo);
-		System.out.println(vo);
-		return count==1;
+	public Long insert(GuestbookVo vo) {
+		sqlSession.insert("guestbook.insert", vo);
+		return vo.getNo();
 	}
 
 	public List<GuestbookVo> findAll() {
@@ -30,7 +28,6 @@ public class GuestbookRepository {
 	}
 	
 	public List<GuestbookVo> findAll(Long no) {
-//		findAllByNo 구현
 		List<GuestbookVo> result = sqlSession.selectList("guestbook.findAllByNo", no);
 		return result;
 	}
