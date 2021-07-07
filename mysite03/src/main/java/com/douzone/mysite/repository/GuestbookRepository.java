@@ -16,9 +16,6 @@ public class GuestbookRepository {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
-	@Autowired
-	private DataSource dataSource;
 
 	public boolean insert(GuestbookVo vo) {
 		System.out.println(vo);
@@ -29,6 +26,12 @@ public class GuestbookRepository {
 
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> result = sqlSession.selectList("guestbook.findAll");
+		return result;
+	}
+	
+	public List<GuestbookVo> findAll(Long no) {
+//		findAllByNo 구현
+		List<GuestbookVo> result = sqlSession.selectList("guestbook.findAllByNo", no);
 		return result;
 	}
 
