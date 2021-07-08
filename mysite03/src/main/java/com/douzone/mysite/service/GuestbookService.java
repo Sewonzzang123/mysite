@@ -30,9 +30,5 @@ public class GuestbookService {
 		return guestbookRepository.insert(vo);
 	}
 
-	public Boolean hasNext(Long no) {
-		return guestbookRepository.hasNext(no);
-	}
-	
 	
 }

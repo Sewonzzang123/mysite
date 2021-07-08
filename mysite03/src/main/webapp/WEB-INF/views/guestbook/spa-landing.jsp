@@ -64,10 +64,14 @@
 			type : "get", // 요청 메서드
 			data : "no=" + no,
 			success : function(response) {
-				let html = listEJS.render(response);
-
-				$("#list-guestbook").append(html);
-
+				if (response.data.length == 0) {
+					flag = true;
+					let html = "<li><strong>더 이상 글이 없습니다.</strong></li>";
+					$("#list-guestbook").append(html);
+				} else {
+					let html = listEJS.render(response);
+					$("#list-guestbook").append(html);
+				}
 			},
 		});
 	};
@@ -132,37 +136,23 @@
 		});
 	};
 
-	var hasnext = function() {
-		var no = $("#list-guestbook li:last-child").data("no");
-		var result = "";
-		$.ajax({
-			url : "${pageContext.request.contextPath }/guestbook/api/hasnext",
-			async: false,
-			dataType : "json", // 받을 때 포멧
-			type : "get", //요청 메서드
-			data : "no=" + no,
-			success : function(response) {
-				result = response.data;				
-			},
-		});
-		return result;
-	}
+	var flag = false;
 
 	$(function() {
-		if($(this).scrollTop()==0){
+		if ($(this).scrollTop() == 0) {
 			fetch();
-		}
+			}
 		$(window).scroll(function() {
 			var $window = $(this);
 
 			var windowHeight = $window.height();
 			var scrollTop = $window.scrollTop();
 			var documentHeight = $(document).height();
-			
-			var flag = hasnext();
 
 			if (scrollTop + windowHeight + 10 > documentHeight) {
-				if(flag){fetch();}else{console.log("마지막");}
+				if (flag == false) {
+					fetch();
+				}
 			}
 		});
 		$("#add-form").submit(function() {

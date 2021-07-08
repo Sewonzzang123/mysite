@@ -29,13 +29,6 @@ public class GuestbookController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/hasnext")
-	public JsonResult hasnext(@RequestParam Long no) {
-		Boolean result = guestbookService.hasNext(no);		
-		return JsonResult.success(result);
-	}
-	
-	@ResponseBody
 	@RequestMapping("/add")
 	public JsonResult add(@RequestBody GuestbookVo vo) {
 		Long no = guestbookService.addMessage(vo);

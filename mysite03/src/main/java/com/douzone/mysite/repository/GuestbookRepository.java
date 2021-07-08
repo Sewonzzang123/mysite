@@ -40,8 +40,4 @@ public class GuestbookRepository {
 		return count==1;
 
 	}
-
-	public Boolean hasNext(Long no) {
-		return sqlSession.selectList("guestbook.findAllByNo", no).size()!=0 ? true : false;
-	}
 }
