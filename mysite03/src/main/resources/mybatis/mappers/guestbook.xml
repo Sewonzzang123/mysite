@@ -50,9 +50,6 @@
 		order by reg_date desc
 		limit 0,3
 	</select>
-	
-
-
 
 </mapper>
 

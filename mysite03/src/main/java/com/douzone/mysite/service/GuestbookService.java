@@ -29,6 +29,10 @@ public class GuestbookService {
 	public Long addMessage(GuestbookVo vo) {
 		return guestbookRepository.insert(vo);
 	}
+
+	public Boolean hasNext(Long no) {
+		return guestbookRepository.hasNext(no);
+	}
 	
 	
 }
