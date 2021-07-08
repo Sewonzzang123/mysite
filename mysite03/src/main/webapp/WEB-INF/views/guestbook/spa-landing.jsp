@@ -81,17 +81,17 @@
 
 		vo.name = $("#input-name").val();
 		if (vo.name == "") {
-			messageBox("이름", "이름을 입력하세요.");
+			messageBox("이름", "이름을 입력하세요.",function(){$("#input-name").focus();});
 			return;
 		}
 		vo.password = $("#input-password").val();
 		if (vo.password == "") {
-			messageBox("비밀번호", "비밀번호를 입력하세요.");
+			messageBox("비밀번호", "비밀번호를 입력하세요.",function(){$("#input-password").focus();});
 			return;
 		}
 		vo.message = $("#tx-content").val();
 		if (vo.message == "") {
-			messageBox("메시지", "메시지를 작성하세요.");
+			messageBox("메시지", "메시지를 작성하세요.",function(){$("#tx-content").focus();});
 			return;
 		}
 
@@ -108,13 +108,15 @@
 
 				$("#list-guestbook").prepend(html);
 
-				$("#input-name").val("");
-				$("#input-password").val("");
-				$("#tx-content").val("");
+				$('#add-form')[0].reset();
+				//많아지면 어떻게 할래?? ㅇㅅㅇ...
+				//$("#input-name").val("");
+				//$("#input-password").val("");
+				//$("#tx-content").val("");
 			},
 		});
 	};
-	var messageBox = function(title, message) {
+	var messageBox = function(title, message, callback) {
 		$("#dialog-message p").text(message);
 		$("#dialog-message").dialog({
 			modal : true,
@@ -124,24 +126,16 @@
 				},
 			},
 			title : title,
-			close : function() {
-				if ("이름" == title) {
-					$("#input-name").focus();
-				} else if ("비밀번호" == title) {
-					$("#input-password").focus();
-				} else {
-					$("#tx-content").focus();
-				}
-			}
+			close : callback,
 		});
 	};
 
 	var flag = false;
-
+	
+	
 	$(function() {
-		if ($(this).scrollTop() == 0) {
-			fetch();
-			}
+		
+		fetch();
 		$(window).scroll(function() {
 			var $window = $(this);
 
@@ -227,7 +221,7 @@
 							}
 
 						});
-		fetch();
+		
 	});
 </script>
 </head>
